@@ -22,7 +22,7 @@ const plans = [
   },
 ]
 
-export default function Example() {
+export default function Skus() {
   const [selected, setSelected] = useState(plans[0])
 
   return (
