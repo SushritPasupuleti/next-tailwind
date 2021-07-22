@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { RadioGroup } from '@headlessui/react'
+import classNames from 'classnames';
 
 const plans = [
   {
@@ -23,85 +24,48 @@ const plans = [
 ]
 
 export default function Skus() {
-  const [selected, setSelected] = useState(plans[0])
+  const [selected, setSelected] = useState('startup')
 
   return (
-    <div className="w-full px-4 py-16">
-      <div className="w-full max-w-md mx-auto">
-        <RadioGroup value={selected} onChange={setSelected}>
-          <RadioGroup.Label className="sr-only">Server size</RadioGroup.Label>
-          <div className="space-y-2">
-            {plans.map((plan) => (
-              <RadioGroup.Option
-                key={plan.name}
-                value={plan}
-                className={({ active, checked }) =>
-                  `${
-                    active
-                      ? 'ring-2 ring-offset-2 ring-offset-sky-300 ring-white ring-opacity-60'
-                      : ''
-                  }
-                  ${
-                    checked ? 'bg-sky-900 bg-opacity-75 text-white' : 'bg-white'
-                  }
-                    relative rounded-lg shadow-md px-5 py-4 cursor-pointer flex focus:outline-none`
-                }
-              >
-                {({ active, checked }) => (
-                  <>
-                    <div className="flex items-center justify-between w-full">
-                      <div className="flex items-center">
-                        <div className="text-sm">
-                          <RadioGroup.Label
-                            as="p"
-                            className={`font-medium  ${
-                              checked ? 'text-white' : 'text-gray-900'
-                            }`}
-                          >
-                            {plan.name}
-                          </RadioGroup.Label>
-                          <RadioGroup.Description
-                            as="span"
-                            className={`inline ${
-                              checked ? 'text-sky-100' : 'text-gray-500'
-                            }`}
-                          >
-                            <span>
-                              {plan.ram}/{plan.cpus}
-                            </span>{' '}
-                            <span aria-hidden="true">&middot;</span>{' '}
-                            <span>{plan.disk}</span>
-                          </RadioGroup.Description>
-                        </div>
-                      </div>
-                      {checked && (
-                        <div className="flex-shrink-0 text-white">
-                          <CheckIcon className="w-6 h-6" />
-                        </div>
-                      )}
-                    </div>
-                  </>
+    <RadioGroup value={selected} onChange={setSelected}>
+      {/* This Label is for the root `RadioGroup`.  */}
+      <RadioGroup.Label className="sr-only">Plan</RadioGroup.Label>
+
+      <div className="bg-white rounded-md">
+        <RadioGroup.Option
+          value="startup"
+          className={({ checked }) => `
+            ${checked ? 'bg-indigo-50 border-indigo-200' : 'border-gray-200'}
+            relative border p-4 flex
+          `}
+        >
+          {({ checked }) => (
+            <div className="flex flex-col">
+              {/* This Label is for the `RadioGroup.Option`.  */}
+              <RadioGroup.Label
+                as="span"
+                className={classNames(
+                  checked ? 'text-indigo-900' : 'text-gray-900',
+                  'block text-sm font-medium'
                 )}
-              </RadioGroup.Option>
-            ))}
-          </div>
-        </RadioGroup>
-      </div>
-    </div>
-  )
-}
+              >
+                Startup
+              </RadioGroup.Label>
 
-function CheckIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" {...props}>
-      <circle cx={12} cy={12} r={12} fill="#fff" opacity="0.2" />
-      <path
-        d="M7 13l3 3 7-7"
-        stroke="#fff"
-        strokeWidth={1.5}
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-    </svg>
+              {/* This Description is for the `RadioGroup.Option`.  */}
+              <RadioGroup.Description
+                as="span"
+                className={classNames(
+                  checked ? 'text-indigo-700' : 'text-gray-500',
+                  'block text-sm'
+                )}
+              >
+                Up to 5 active job postings
+              </RadioGroup.Description>
+            </div>
+          )}
+        </RadioGroup.Option>
+      </div>
+    </RadioGroup>
   )
 }
