@@ -1,71 +1,46 @@
-import { useState } from 'react'
-import { RadioGroup } from '@headlessui/react'
-import classNames from 'classnames';
+import { Disclosure } from '@headlessui/react'
+import { ChevronUpIcon } from '@heroicons/react/solid'
 
-const plans = [
-  {
-    name: 'Startup',
-    ram: '12GB',
-    cpus: '6 CPUs',
-    disk: '160 GB SSD disk',
-  },
-  {
-    name: 'Business',
-    ram: '16GB',
-    cpus: '8 CPUs',
-    disk: '512 GB SSD disk',
-  },
-  {
-    name: 'Enterprise',
-    ram: '32GB',
-    cpus: '12 CPUs',
-    disk: '1024 GB SSD disk',
-  },
-]
-
-export default function Skus() {
-  const [selected, setSelected] = useState('startup')
-
+export default function Example() {
   return (
-    <RadioGroup value={selected} onChange={setSelected}>
-      {/* This Label is for the root `RadioGroup`.  */}
-      <RadioGroup.Label className="sr-only">Plan</RadioGroup.Label>
-
-      <div className="bg-white rounded-md">
-        <RadioGroup.Option
-          value="startup"
-          className={({ checked }) => `
-            ${checked ? 'bg-indigo-50 border-indigo-200' : 'border-gray-200'}
-            relative border p-4 flex
-          `}
-        >
-          {({ checked }) => (
-            <div className="flex flex-col">
-              {/* This Label is for the `RadioGroup.Option`.  */}
-              <RadioGroup.Label
-                as="span"
-                className={classNames(
-                  checked ? 'text-indigo-900' : 'text-gray-900',
-                  'block text-sm font-medium'
-                )}
-              >
-                Startup
-              </RadioGroup.Label>
-
-              {/* This Description is for the `RadioGroup.Option`.  */}
-              <RadioGroup.Description
-                as="span"
-                className={classNames(
-                  checked ? 'text-indigo-700' : 'text-gray-500',
-                  'block text-sm'
-                )}
-              >
-                Up to 5 active job postings
-              </RadioGroup.Description>
-            </div>
+    <div className="w-full px-4 pt-16">
+      <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
+        <Disclosure>
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <span>What is your refund policy?</span>
+                <ChevronUpIcon
+                  className={`${
+                    open ? 'transform rotate-180' : ''
+                  } w-5 h-5 text-purple-500`}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                If you're unhappy with your purchase for any reason, email us
+                within 90 days and we'll refund you in full, no questions asked.
+              </Disclosure.Panel>
+            </>
           )}
-        </RadioGroup.Option>
+        </Disclosure>
+        <Disclosure as="div" className="mt-2">
+          {({ open }) => (
+            <>
+              <Disclosure.Button className="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-purple-900 bg-purple-100 rounded-lg hover:bg-purple-200 focus:outline-none focus-visible:ring focus-visible:ring-purple-500 focus-visible:ring-opacity-75">
+                <span>Do you offer technical support?</span>
+                <ChevronUpIcon
+                  className={`${
+                    open ? 'transform rotate-180' : ''
+                  } w-5 h-5 text-purple-500`}
+                />
+              </Disclosure.Button>
+              <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
+                No.
+              </Disclosure.Panel>
+            </>
+          )}
+        </Disclosure>
       </div>
-    </RadioGroup>
+    </div>
   )
 }
